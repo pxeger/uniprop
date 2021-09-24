@@ -7,7 +7,7 @@ This module reports the Unicode properties of codepoints, beyond what Python's `
 Unicode
 -------
 
-This module supports Unicode 13.0.
+This module supports Unicode 14.0.0.
 
 
 

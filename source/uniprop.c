@@ -2,7 +2,7 @@
  *
  * This module reports the Unicode properties of codepoints.
  *
- * Copyright 2016-2020 Matthew Barnett
+ * Copyright 2016-2021 Matthew Barnett
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,12 @@
  * limitations under the License.
  */
 #include "Python.h"
-#include "structmember.h" /* offsetof */
-#include <ctype.h>
-#include "pyport.h"
-#include "pythread.h"
-
 #include <stdlib.h>
+#include "structmember.h" /* offsetof */
 
 #include "unicode_tables.h"
 
-#define UNIPROP_VERSION "1.6"
+#define UNIPROP_VERSION "1.7"
 
 /* Returns the Alphabetic property for a codepoint. */
 static PyObject* get_alphabetic(PyObject* self_, PyObject* args, PyObject*
