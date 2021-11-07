@@ -30,7 +30,7 @@ jobs:
       run: |
         # ensure there's exactly one wheel
         ls *.whl | wc -l | grep -Fqx 1
-        printf "::set-env name=wheel_filename::%s\n" *.whl
+        printf "::set-env name=wheel_filename::%s\n" *.whl >> "$GITHUB_ENV"
     - name: auditwheel
       run: |
         auditwheel repair ${{ env.wheel_filename }} -w wheelhouse
