@@ -30,12 +30,12 @@ jobs:
       run: |
         # ensure there's exactly one wheel
         ls *.whl | wc -l | grep -Fqx 1
-        printf "::set-env name=wheel_filename::%s\n" *.whl >> "$GITHUB_ENV"
+        printf "WHEEL_FILENAME=%s\n" *.whl | tee -a "$GITHUB_ENV"
     - name: auditwheel
       run: |
-        auditwheel repair *.whl -w wheelhouse
+        auditwheel repair ${{ env.WHEEL_FILENAME }} -w wheelhouse
     - name: Store wheel artifacts
       uses: actions/upload-artifact@v2
       with:
         name: wheel
-        path: ${{ env.wheel_filename }}
+        path: ${{ env.WHEEL_FILENAME }}
