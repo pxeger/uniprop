@@ -5,6 +5,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,15 +23,15 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip wheel auditwheel
+        python -m pip install --upgrade pip wheel auditwheel setuptools
     - name: Build
       run: |
-        pip wheel .
+        python setup.py bdist_wheel
     - name: Get wheel filename
       run: |
         # ensure there's exactly one wheel
-        ls *.whl | wc -l | grep -Fqx 1
-        printf "WHEEL_FILENAME=%s\n" *.whl | tee -a "$GITHUB_ENV"
+        ls dist/*.whl | wc -l | grep -Fqx 1
+        printf "WHEEL_FILENAME=%s\n" dist/*.whl >> "$GITHUB_ENV"
     - name: auditwheel
       run: |
         auditwheel repair ${{ env.WHEEL_FILENAME }} -w wheelhouse
@@ -39,3 +40,25 @@ jobs:
       with:
         name: wheel
         path: ${{ env.WHEEL_FILENAME }}
+
+  publish:
+    if: github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v2
+      - name: Build source distribution
+        run: |
+          python setup.py sdist
+      - name: Download wheel artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: wheel
+      - name: Upload to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
