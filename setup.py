@@ -6,7 +6,7 @@ with open('README.rst') as file:
 
 setup(
     name='uniprop',
-    version='1.7',
+    version='1.7.post1',
     description="'uniprop' provides the Unicode properties of codepoints similar to those of the unicodedata module.",
     long_description=long_description,
     long_description_content_type='text/x-rst',
