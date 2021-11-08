@@ -5,14 +5,14 @@ with open('README.rst') as file:
     long_description = file.read()
 
 setup(
-    name='uniprop',
+    name='uniprop_fixed',
     version='1.7.post1',
     description="'uniprop' provides the Unicode properties of codepoints similar to those of the unicodedata module.",
     long_description=long_description,
     long_description_content_type='text/x-rst',
-    author='Matthew Barnett',
-    author_email='uniprop@mrabarnett.plus.com',
-    url='https://bitbucket.org/mrabarnett/uniprop',
+    author='Matthew Barnett; Patrick Reader',
+    author_email='uniprop@pxeger.com',
+    url='https://github.com/pxeger/uniprop',
     license='Apache Software License',
 
     packages=find_packages(),
@@ -31,5 +31,5 @@ setup(
 
     package_dir={'uniprop': ''},
     ext_modules=[Extension('uniprop', ['source/unicode_tables.c', 'source/uniprop.c'])],
-    python_requires='>=3.6',
+    python_requires='>=3.8',
 )
