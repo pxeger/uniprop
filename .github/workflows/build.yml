@@ -33,7 +33,7 @@ jobs:
         printf "::set-env name=wheel_filename::%s\n" *.whl >> "$GITHUB_ENV"
     - name: auditwheel
       run: |
-        auditwheel repair ${{ env.wheel_filename }} -w wheelhouse
+        auditwheel repair *.whl -w wheelhouse
     - name: Store wheel artifacts
       uses: actions/upload-artifact@v2
       with:
